@@ -82,8 +82,9 @@ contract CourseRegistration is Ownable {
     constructor(uint256 _courseFee) Ownable(msg.sender) {
         courseFee = _courseFee;
     }
-
-    function payForCourse(string memory email) public payable {
+    //make it more gas efficient, and logically external modifier should be used instead of public
+    // as it is not private function or internally used
+    function payForCourse(string memory email) external payable {
         require(msg.value == courseFee, "Payment must be equal to the course fee");
         payments.push(Payment(msg.sender, email, msg.value));
         emit PaymentReceived(msg.sender, email, msg.value);
